@@ -1,5 +1,8 @@
 package org.usfirst.frc.team5761.robot;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -13,6 +16,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
+
+    static final Logger LOG = LoggerFactory.getLogger(Robot.class);
+
     RobotDrive myRobot;
     Joystick stick;
     int autoLoopCounter;
@@ -22,10 +28,14 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        System.out.println("robotInit: BEGIN");
+        LOG.info("robotInit: BEGIN");
+
+        // load the DriverStation SmartDashboard
+        new DriverStationSmartDashboard();  // ToDo: perhaps this should be static
+
         myRobot = new RobotDrive(0, 1);
         stick = new Joystick(0);
-        System.out.println("robotInit: END");
+        LOG.info("robotInit: END");
     }
 
     /**
@@ -52,7 +62,9 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit() {
-        System.out.println("teleopInit: BEGIN");
+
+        LOG.info("teleopInit: BEGIN");
+        LOG.info("teleopInit: END");
     }
 
     /**
