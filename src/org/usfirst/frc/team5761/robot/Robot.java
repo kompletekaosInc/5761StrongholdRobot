@@ -21,11 +21,13 @@ public class Robot extends IterativeRobot {
 
     static final Logger LOG = LoggerFactory.getLogger(Robot.class);
 
-    //RobotDrive myRobot;
+    RobotDrive myRobot;
     Joystick stick;
     Spark leftMC;
     Spark rightMC;
     int autoLoopCounter;
+
+
 
     /**
      * This function is run when the robot is first started up and should be
@@ -91,10 +93,10 @@ public class Robot extends IterativeRobot {
 
         double appliedSpeed = speed * throttle;
 
-        LOG.debug("teleopPeriodic: [side:" + side + "][speed:" + speed + "][throttle:" + throttle + "]");
-        SmartDashboard.putString("side", ""+side);
-        SmartDashboard.putString("speed", ""+speed);
-        SmartDashboard.putString("throttle", ""+throttle);
+        //LOG.debug("teleopPeriodic: [side:" + side + "][speed:" + speed + "][throttle:" + throttle + "]");
+        displayValue("side", ""+side);
+        displayValue("speed", ""+speed);
+        displayValue("throttle", ""+throttle);
 
 
 
@@ -116,16 +118,19 @@ public class Robot extends IterativeRobot {
      */
     private void drive(double leftPower, double rightPower)
     {
-        LOG.debug("drive: [leftPower:" + leftPower + "][rightPower:" + rightPower + "]");
+        LOG.debug("drive:");
 
-        SmartDashboard.putString("leftPower", ""+leftPower);
-        SmartDashboard.putString("rightPower", ""+rightPower);
+        displayValue("leftPower", ""+leftPower);
+        displayValue("rightPower", ""+rightPower);
 
         leftMC.set(leftPower);
         rightMC.set(rightPower);
 
     }
 
+    /**
+     * Set the left and right motor to 0.  Stop the drive.
+     */
     private void stop()
     {
         leftMC.set(0);
@@ -139,6 +144,19 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    }
+
+    /**
+     * Display the provided name and value.  This could be done by presenting the name/value to the SmartDashboard
+     * as well as logging the information.
+     *
+     * @param name
+     * @param value
+     */
+    private void displayValue( String name, Object value )
+    {
+        SmartDashboard.putString(name, ""+value);
+        LOG.debug("[" + name + ":" + value + "]");
     }
 
 }
