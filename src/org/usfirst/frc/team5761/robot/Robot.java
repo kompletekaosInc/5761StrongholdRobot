@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.CameraServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,7 +27,7 @@ public class Robot extends IterativeRobot {
     Spark leftMC;
     Spark rightMC;
     int autoLoopCounter;
-
+    CameraServer camera1;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -34,8 +35,12 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         LOG.info("robotInit: BEGIN");
 
+
+
         // load the DriverStation SmartDashboard
-        new DriverStationSmartDashboard();  // ToDo: perhaps this should be static
+
+        camera1 = CameraServer.getInstance();
+        new DriverStationSmartDashboard(camera1);  // ToDo: perhaps this should be static
 
         //myRobot = new RobotDrive(0, 1);
         leftMC = new Spark(0);

@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import edu.wpi.first.wpilibj.CameraServer;
 
 /**
  * Created by justin on 9/06/2016.
@@ -28,13 +29,17 @@ public class DriverStationSmartDashboard {
     /**
      * Create a SmartDashboard in the driver station and add the default data items to the dashboard.
      */
-    public DriverStationSmartDashboard() {
+    public DriverStationSmartDashboard(CameraServer camera1) {
         LOG.info("<constructor> Add default data to SmartDashbaord");
 
         // add the default standard data items to the dashboard
         SmartDashboard.putString("CurrentMillis", ""+System.currentTimeMillis());
 
         SendableChooser choice = new SendableChooser();
+
+        camera1.setQuality(50);
+        camera1.startAutomaticCapture("cam0");
+
         choice.addDefault("Log Level", "INFO");
         //choice.addObject("");
     }
