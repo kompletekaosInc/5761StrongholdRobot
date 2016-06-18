@@ -1,13 +1,10 @@
 package org.usfirst.frc.team5761.robot;
 
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
@@ -21,13 +18,35 @@ public class Robot extends IterativeRobot {
 
     static final Logger LOG = LoggerFactory.getLogger(Robot.class);
 
-    RobotDrive myRobot;
-    Joystick stick;
-    Spark leftMC;
-    Spark rightMC;
-    int autoLoopCounter;
+    private RobotDrive myRobot;
+    private Joystick stick;
+
+    private Spark leftMC;
+    private Spark rightMC;
+    ADXRS450_Gyro gyro = null;
+
+    private int autoLoopCounter;
 
 
+    /**
+     * Retrieve the gyro angle reading.  Defaults to 0 if there is no gyro installed.
+     *
+     * @return a double representing the gyro angle (or 0 if there is no gyro installed).
+     */
+    public double getGyroAngle()
+    {
+        double gyroAngle = 0;
+
+        // we can ony get a reading from the gyro if we have one installed in the robot
+        if (gyro != null)
+        {
+            gyroAngle = gyro.getAngle();
+        }
+
+        displayValue("gyroAngle", gyroAngle);
+
+        return gyroAngle;
+    }
 
     /**
      * This function is run when the robot is first started up and should be
@@ -38,6 +57,20 @@ public class Robot extends IterativeRobot {
 
         // load the DriverStation SmartDashboard
         new DriverStationSmartDashboard();  // ToDo: perhaps this should be static
+
+
+        // attempt to create the gyro
+        try {
+            gyro = new ADXRS450_Gyro();
+            gyro.reset();
+            gyro.calibrate();
+
+            displayValue("Gyro Installed", "yes");
+
+        } catch (Exception e) {
+            LOG.error("Gyro not installed correctly", e);
+            displayValue("Gyro Installed", "no");
+        }
 
         //myRobot = new RobotDrive(0, 1);
         leftMC = new Spark(0);
@@ -80,6 +113,9 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+
+        // see the current gyro reading
+        getGyroAngle();
 
         //myRobot.arcadeDrive(stick);
         double side = stick.getX();
