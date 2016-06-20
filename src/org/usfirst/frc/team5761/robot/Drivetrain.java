@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5761.robot;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,16 +19,32 @@ public class Drivetrain {
     private Spark leftMC;
     private Spark rightMC;
 
+    ADXRS450_Gyro gyro = null;
+
+
     /**
      * Create a Drivetrain.
      */
-    public Drivetrain(int portLeftMC, int portRightMC) {
+    public Drivetrain() {
         LOG.info("<constructor>");
 
         //myRobot = new RobotDrive(0, 1);
         leftMC = new Spark(0);
         rightMC = new Spark(1);
 
+
+        // attempt to create the gyro
+        try {
+            gyro = new ADXRS450_Gyro();
+            gyro.reset();
+            gyro.calibrate();
+
+            Robot.displayValue("Gyro Installed", "yes");
+
+        } catch (Exception e) {
+            LOG.error("Gyro not installed correctly", e);
+            Robot.displayValue("Gyro Installed", "no");
+        }
     }
 
 
@@ -37,7 +54,7 @@ public class Drivetrain {
      * @param leftPower
      * @param rightPower
      */
-    private void drive(double leftPower, double rightPower)
+    public void drive(double leftPower, double rightPower)
     {
         LOG.debug("drive: [leftPower:" + leftPower + "][rightPower:" + rightPower + "]");
 
@@ -49,13 +66,42 @@ public class Drivetrain {
 
     }
 
-    private void stop()
+    public void stop()
     {
         leftMC.set(0);
         rightMC.set(0);
 
         LOG.debug("Stop");
 
+    }
+
+    /**
+     *
+     * @param power
+     */
+    public void followGyro(double power)
+    {
+        // ToDo: fill in this method
+    }
+
+    /**
+     * Retrieve the gyro angle reading.  Defaults to 0 if there is no gyro installed.
+     *
+     * @return a double representing the gyro angle (or 0 if there is no gyro installed).
+     */
+    private double getGyroAngle()
+    {
+        double gyroAngle = 0;
+
+        // we can ony get a reading from the gyro if we have one installed in the robot
+        if (gyro != null)
+        {
+            gyroAngle = gyro.getAngle();
+        }
+
+        Robot.displayValue("gyroAngle", ""+gyroAngle);
+
+        return gyroAngle;
     }
 
 }

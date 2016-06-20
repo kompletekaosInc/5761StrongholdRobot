@@ -1,13 +1,10 @@
 package org.usfirst.frc.team5761.robot;
 
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.CameraServer;
 
@@ -22,11 +19,17 @@ public class Robot extends IterativeRobot {
 
     static final Logger LOG = LoggerFactory.getLogger(Robot.class);
 
-    Joystick stick;
 
 
+    private Drivetrain drivetrain;
+    private CameraServer camera1;
+    private DriverStation driverStation;
+
+
+    // loop counter for measuring autonomous iterations.
     int autoLoopCounter;
-    CameraServer camera1;
+
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -34,11 +37,17 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         LOG.info("robotInit: BEGIN");
 
-        camera1 = CameraServer.getInstance();
-        camera1.setQuality(50);
-        camera1.startAutomaticCapture("cam0");
+        drivetrain = new Drivetrain();
 
-        stick = new Joystick(0);
+        try {
+            camera1 = CameraServer.getInstance();
+            camera1.setQuality(50);
+            camera1.startAutomaticCapture("cam0");
+        } catch (Exception e) {
+            LOG.error("Camera not installed correctly", e);
+        }
+
+        driverStation = new DriverStation();
 
         LOG.info("robotInit: END");
     }
@@ -76,34 +85,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-
-        //myRobot.arcadeDrive(stick);
-        double side = stick.getX();
-        double speed = stick.getY();
-        double throttle = stick.getThrottle();
-        //LOG.debug("teleopPeriodic: raw [side:" + side + "][speed:" + speed + "][throttle:" + throttle + "]");
-
-        throttle = (throttle - 1)/2;
-        speed = speed * throttle;
-        side = side * throttle;
-
-        double appliedSpeed = speed * throttle;
-
-        LOG.debug("teleopPeriodic: [side:" + side + "][speed:" + speed + "][throttle:" + throttle + "]");
-        SmartDashboard.putString("side", ""+side);
-        SmartDashboard.putString("speed", ""+speed);
-        SmartDashboard.putString("throttle", ""+throttle);
-
-
-
-        double leftMotorPower = -speed + -side ;
-        double rightMotorPower = speed + -side;
-
-
-        drive(leftMotorPower, rightMotorPower);
-
-        //This is a TEST - WILL REMOVE UNLESS THIS IS THE BEST OPTION
-       // if (button() )
+        driverStation.control(this);
     }
 
     /**
@@ -113,4 +95,23 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
     }
 
+    /**
+     * Display the provided name and value.  This could be done by presenting the name/value to the SmartDashboard
+     * as well as logging the information.
+     *
+     * @param name
+     * @param value
+     */
+    public static void displayValue( String name, Object value )
+    {
+        SmartDashboard.putString(name, ""+value);
+        LOG.debug("[" + name + ":" + value + "]");
+    }
+
+
+
+    public void drive(double left, double right)
+    {
+        drivetrain.drive(left, right);
+    }
 }
