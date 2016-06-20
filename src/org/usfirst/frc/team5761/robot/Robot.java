@@ -22,10 +22,9 @@ public class Robot extends IterativeRobot {
 
     static final Logger LOG = LoggerFactory.getLogger(Robot.class);
 
-    //RobotDrive myRobot;
     Joystick stick;
-    Spark leftMC;
-    Spark rightMC;
+
+
     int autoLoopCounter;
     CameraServer camera1;
     /**
@@ -35,16 +34,10 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         LOG.info("robotInit: BEGIN");
 
-
-
-        // load the DriverStation SmartDashboard
-
         camera1 = CameraServer.getInstance();
-        new DriverStationSmartDashboard(camera1);  // ToDo: perhaps this should be static
+        camera1.setQuality(50);
+        camera1.startAutomaticCapture("cam0");
 
-        //myRobot = new RobotDrive(0, 1);
-        leftMC = new Spark(0);
-        rightMC = new Spark(1);
         stick = new Joystick(0);
 
         LOG.info("robotInit: END");
@@ -113,32 +106,6 @@ public class Robot extends IterativeRobot {
        // if (button() )
     }
 
-    /**
-     * This method will drive the motors of the robot based on the inputs.
-     *
-     * @param leftPower
-     * @param rightPower
-     */
-    private void drive(double leftPower, double rightPower)
-    {
-        LOG.debug("drive: [leftPower:" + leftPower + "][rightPower:" + rightPower + "]");
-
-        SmartDashboard.putString("leftPower", ""+leftPower);
-        SmartDashboard.putString("rightPower", ""+rightPower);
-
-        leftMC.set(leftPower);
-        rightMC.set(rightPower);
-
-    }
-
-    private void stop()
-    {
-        leftMC.set(0);
-        rightMC.set(0);
-
-        LOG.debug("Stop");
-
-    }
     /**
      * This function is called periodically during test mode
      */
