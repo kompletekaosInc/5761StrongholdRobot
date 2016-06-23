@@ -38,11 +38,11 @@ public class LogitechJoystick extends DriveControl{
         double throttle = stick.getThrottle();
         //LOG.debug("teleopPeriodic: raw [side:" + side + "][speed:" + speed + "][throttle:" + throttle + "]");
 
-        throttle = (throttle - 1)/2;
+        throttle = (1 - throttle)/2;
         speed = speed * throttle;
         side = side * throttle;
 
-        double appliedSpeed = speed * throttle;
+        double appliedSpeed = (speed * throttle);
 
         //LOG.debug("teleopPeriodic: [side:" + side + "][speed:" + speed + "][throttle:" + throttle + "]");
         Robot.displayValue("side", ""+side);
@@ -50,10 +50,12 @@ public class LogitechJoystick extends DriveControl{
         Robot.displayValue("throttle", ""+throttle);
 
 
-        double leftMotorPower = -speed + -side ;
-        double rightMotorPower = speed + -side;
+        double leftMotorPower = speed - side ;
+        double rightMotorPower = (speed + side)*-1;
 
         // tell the robot to drive using the calculated power for the left and right motors
         robot.drive(leftMotorPower, rightMotorPower);
-    }
+//        robot.drive(.5, -.5);
+  }
+
 }

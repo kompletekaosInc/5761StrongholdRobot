@@ -85,8 +85,9 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        driverStation.control(this);
+       driverStation.control(this);
     }
+
 
     /**
      * This function is called periodically during test mode
@@ -104,7 +105,7 @@ public class Robot extends IterativeRobot {
      */
     public static void displayValue( String name, Object value )
     {
-        SmartDashboard.putString(name, ""+value);
+        SmartDashboard.putString(name, value.toString());
         LOG.debug("[" + name + ":" + value + "]");
     }
 
