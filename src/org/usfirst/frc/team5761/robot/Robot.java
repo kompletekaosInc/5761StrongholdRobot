@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
 
         try {
             camera1 = CameraServer.getInstance();
-            camera1.setQuality(50);
+            camera1.setQuality(10);
             camera1.startAutomaticCapture("cam0");
         } catch (Exception e) {
             LOG.error("Camera not installed correctly", e);
