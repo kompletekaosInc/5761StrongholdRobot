@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5761.robot;
+package org.usfirst.frc.team8761.robot;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,8 +22,9 @@ public class Robot extends IterativeRobot {
 
 
     private Drivetrain drivetrain;
+    private Shooter shooter;
     private CameraServer camera1;
-    private DriverStation driverStation;
+    private org.usfirst.frc.team8761.robot.DriverStation driverStation;
 
 
     // loop counter for measuring autonomous iterations.
@@ -38,6 +39,7 @@ public class Robot extends IterativeRobot {
         LOG.info("robotInit: BEGIN");
 
         drivetrain = new Drivetrain();
+        shooter = new Shooter();
 
         try {
             camera1 = CameraServer.getInstance();
@@ -47,7 +49,7 @@ public class Robot extends IterativeRobot {
             LOG.error("Camera not installed correctly", e);
         }
 
-        driverStation = new DriverStation();
+        driverStation = new org.usfirst.frc.team8761.robot.DriverStation();
 
         LOG.info("robotInit: END");
     }
@@ -79,6 +81,7 @@ public class Robot extends IterativeRobot {
 
         LOG.info("teleopInit: BEGIN");
         LOG.info("teleopInit: END");
+        shooter.teleopInit();
     }
 
     /**
@@ -86,6 +89,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
        driverStation.control(this);
+
     }
 
 
