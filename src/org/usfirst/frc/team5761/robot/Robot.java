@@ -111,8 +111,12 @@ public class Robot extends IterativeRobot {
 
 
 
-    public void drive(double left, double right)
-    {
+    public void drive(double left, double right) {
+
         drivetrain.drive(left, right);
+    }
+
+    private void autonomousDrive(double currentTime, double ){
+
     }
 }
