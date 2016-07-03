@@ -19,15 +19,12 @@ public class Robot extends IterativeRobot {
 
     static final Logger LOG = LoggerFactory.getLogger(Robot.class);
 
-
+    private AutonomousStrategy1 autoStrategy;
 
     private Drivetrain drivetrain;
+    private Arm arm;
     private CameraServer camera1;
     private DriverStation driverStation;
-
-
-    // loop counter for measuring autonomous iterations.
-    int autoLoopCounter;
 
 
     /**
@@ -38,6 +35,7 @@ public class Robot extends IterativeRobot {
         LOG.info("robotInit: BEGIN");
 
         drivetrain = new Drivetrain();
+        arm = new Arm();
 
         try {
             camera1 = CameraServer.getInstance();
@@ -56,20 +54,24 @@ public class Robot extends IterativeRobot {
      * This function is run once each time the robot enters autonomous mode
      */
     public void autonomousInit() {
-        autoLoopCounter = 0;
+
+        LOG.info("autonomousInit: BEGIN");
+        // create the only strategy we have
+        autoStrategy = new AutonomousStrategy1(this);   // ToDo: allow selection of strategies if we have more than one
+
+        displayValues();
+
+        LOG.info("autonomousInit: END");
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        if (autoLoopCounter < 100) //Check if we've completed 100 loops (approximately 2 seconds)
-        {
-            //myRobot.drive(-0.5, 0.0);    // drive forwards half speed
-            autoLoopCounter++;
-        } else {
-            //myRobot.drive(0.0, 0.0);    // stop robot
-        }
+
+        autoStrategy.doAutonomous();
+
+        //displayValues();
     }
 
     /**
@@ -85,7 +87,10 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-       driverStation.control(this);
+
+        driverStation.control(this);
+
+        displayValues();
     }
 
 
@@ -109,14 +114,42 @@ public class Robot extends IterativeRobot {
         LOG.debug("[" + name + ":" + value + "]");
     }
 
+    public void displayValues()
+    {
+        drivetrain.displayValues();
+        arm.displayValues();
+    }
 
 
     public void drive(double left, double right) {
 
         drivetrain.drive(left, right);
     }
+    public void stop(){
+        drivetrain.stop();
+    }
 
-    private void autonomousDrive(double currentTime, double ){
+    public void raiseArm(){
+        arm.raiseArm();
+    }
+    public void lowerArm(){
+        arm.lowerArm();
+    }
+    public void stopArm(){
+        arm.stopArm();
+    }
+    public void resetGyro(){
+        drivetrain.resetGyro();
+    }
 
+    public void driveStraight(double power){
+        drivetrain.followGyro(power,0);
+    }
+    public void driveStraight(double power, double gyroTarget){
+        drivetrain.followGyro(power,gyroTarget);
+    }
+
+    public void turnGyro(double target){
+        drivetrain.gyroTurn(target);
     }
 }

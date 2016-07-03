@@ -31,18 +31,33 @@ public class Drivetrain {
         leftMC = new Spark(0);
         rightMC = new Spark(1);
 
-
-        // attempt to create the gyro
         try {
             gyro = new ADXRS450_Gyro();
-            gyro.reset();
-            gyro.calibrate();
-
             Robot.displayValue("Gyro Installed", "yes");
 
         } catch (Exception e) {
             LOG.error("Gyro not installed correctly", e);
             Robot.displayValue("Gyro Installed", "no");
+        }
+
+        resetGyro();
+
+
+    }
+
+    public void resetGyro() {
+        // attempt to create the gyro
+        if (gyro != null) {
+            try {
+                gyro.reset();
+                gyro.calibrate();
+
+                Robot.displayValue("Gyro Installed", "yes");
+
+            } catch (Exception e) {
+                LOG.error("Gyro not installed correctly", e);
+                Robot.displayValue("Gyro Installed", "no");
+            }
         }
     }
 
@@ -75,13 +90,32 @@ public class Drivetrain {
 
     }
 
+
     /**
      *
      * @param power
      */
-    public void followGyro(double power)
+    public void followGyro(double power, double gyroTarget)
     {
         // ToDo: fill in this method
+        //proportionally drives in the direction of a gyro heading, turning to face the right direction
+        double currentGyroAngle = gyro.getAngle() % 360;
+        double gyroPowerAdjustment = 0;
+        double gyroGain = 0.01;
+
+
+        //Calculates how much to turn based on the current heading and the target heading
+        gyroPowerAdjustment = currentGyroAngle - gyroTarget;
+        gyroPowerAdjustment = gyroPowerAdjustment * gyroGain;
+
+        double gyroMotorPowerLeft = -power - gyroPowerAdjustment;
+        double gyroMotorPowerRight = power - gyroPowerAdjustment;
+
+        //Makes the motors move
+        leftMC.set(gyroMotorPowerLeft);
+        rightMC.set(gyroMotorPowerRight);
+
+        displayValues();
     }
 
     /**
@@ -104,4 +138,12 @@ public class Drivetrain {
         return gyroAngle;
     }
 
+    public void displayValues()
+    {
+        Robot.displayValue("Gyro Angle: " , getGyroAngle()+"");
+        Robot.displayValue("Left Motor: " , leftMC.get()+"");
+        Robot.displayValue("Right Motor: " , rightMC.get()+"");
+    }
+
+  
 }
