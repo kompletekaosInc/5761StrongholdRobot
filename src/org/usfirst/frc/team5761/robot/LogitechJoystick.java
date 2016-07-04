@@ -47,36 +47,44 @@ public class LogitechJoystick extends DriveControl{
         }
 
         else {
-            //myRobot.arcadeDrive(stick);
-            double side = stick.getX();
-            double speed = stick.getY();
-            double throttle = stick.getThrottle();
-            //LOG.debug("teleopPeriodic: raw [side:" + side + "][speed:" + speed + "][throttle:" + throttle + "]");
+            arcadeDriveCommands(robot);
 
-            Robot.displayValue("RAW side", "" + side);
-            Robot.displayValue("RAW speed", "" + speed);
-
-            throttle = (throttle - 1) / 2;
-            speed = speed * throttle;
-            side = side * throttle;
-
-            double appliedSpeed = (speed * throttle);
-
-            //LOG.debug("teleopPeriodic: [side:" + side + "][speed:" + speed + "][throttle:" + throttle + "]");
-            Robot.displayValue("side", "" + side);
-            Robot.displayValue("speed", "" + speed);
-            Robot.displayValue("throttle", "" + throttle);
-
-
-            double leftMotorPower = -speed - side;
-            double rightMotorPower = (speed - side);
-
-            // tell the robot to drive using the calculated power for the left and right motors
-            robot.drive(leftMotorPower, rightMotorPower);
-//        robot.drive(.5, -.5);
         }
   }
 
+    /**
+     * This method is a basic re configure of the arcadeDrive method so that our robot and joystick can utilise it.
+     * @param robot
+     */
+    private void arcadeDriveCommands(Robot robot) {
+        //myRobot.arcadeDrive(stick);
+        double side = stick.getX();
+        double speed = stick.getY();
+        double throttle = stick.getThrottle();
+        //LOG.debug("teleopPeriodic: raw [side:" + side + "][speed:" + speed + "][throttle:" + throttle + "]");
+
+        Robot.displayValue("RAW side", "" + side);
+        Robot.displayValue("RAW speed", "" + speed);
+
+        throttle = (throttle - 1) / 2;
+        speed = speed * throttle;
+        side = side * throttle;
+
+        double appliedSpeed = (speed * throttle);
+
+        //LOG.debug("teleopPeriodic: [side:" + side + "][speed:" + speed + "][throttle:" + throttle + "]");
+        Robot.displayValue("side", "" + side);
+        Robot.displayValue("speed", "" + speed);
+        Robot.displayValue("throttle", "" + throttle);
+
+
+        double leftMotorPower = -speed - side;
+        double rightMotorPower = (speed - side);// * 0.50; //This is to compensate for the right-hand hook on the robot
+
+        // tell the robot to drive using the calculated power for the left and right motors
+        robot.drive(leftMotorPower, rightMotorPower);
+//        robot.drive(.5, -.5);
+    }
 
 
     private void armMovements(Robot robot){

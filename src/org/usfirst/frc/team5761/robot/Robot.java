@@ -150,6 +150,6 @@ public class Robot extends IterativeRobot {
     }
 
     public void turnGyro(double target){
-        drivetrain.gyroTurn(target);
+        //drivetrain.gyroTurn(target);
     }
 }

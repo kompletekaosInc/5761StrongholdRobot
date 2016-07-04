@@ -145,5 +145,5 @@ public class Drivetrain {
         Robot.displayValue("Right Motor: " , rightMC.get()+"");
     }
 
-  
+
 }
