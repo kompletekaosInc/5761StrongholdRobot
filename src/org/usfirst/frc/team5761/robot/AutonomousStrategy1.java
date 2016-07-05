@@ -33,6 +33,8 @@ public class AutonomousStrategy1 {
 
         SmartDashboard.putString("auto currentAutoRunDuration", ""+currentAutoRunDuration);
 
+        //The first two seconds are reserved for the gyro reset in the init
+
         if (currentAutoRunDuration <= 1000)
         {
             // in 1 second of auto
@@ -62,6 +64,7 @@ public class AutonomousStrategy1 {
         else
         {
             LOG.info("Auto: after 5 seconds");
+
         }
 
     }

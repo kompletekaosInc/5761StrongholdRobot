@@ -20,7 +20,7 @@ public class Robot extends IterativeRobot {
     static final Logger LOG = LoggerFactory.getLogger(Robot.class);
 
     private AutonomousStrategy1 autoStrategy1;
-    private AutonomousStrategy2 autoStrategy2;
+    //private AutonomousStrategy2 autoStrategy2;
 
     private Drivetrain drivetrain;
     private Arm arm;
@@ -48,6 +48,8 @@ public class Robot extends IterativeRobot {
 
         driverStation = new DriverStation();
 
+        drivetrain.resetGyro();
+
         LOG.info("robotInit: END");
     }
 
@@ -59,7 +61,7 @@ public class Robot extends IterativeRobot {
         LOG.info("autonomousInit: BEGIN");
         // create the only strategy we have
         autoStrategy1 = new AutonomousStrategy1(this);   // ToDo: allow selection of strategies if we have more than one
-       // autoStrategy2 = new AutonomousStrategy2((this)); //ToDo: fix this
+        //autoStrategy2 = new AutonomousStrategy2((this)); //ToDo: fix this
 
         displayValues();
 
@@ -130,6 +132,7 @@ public class Robot extends IterativeRobot {
     public void stop(){
         drivetrain.stop();
     }
+    public void brake(){drivetrain.brake();}
 
     public void raiseArm(){
         arm.raiseArm();
@@ -142,6 +145,10 @@ public class Robot extends IterativeRobot {
     }
     public void resetGyro(){
         drivetrain.resetGyro();
+    }
+
+    public double getGyroReading() {
+        return drivetrain.getGyroAngle();
     }
 
     public void driveStraight(double power){

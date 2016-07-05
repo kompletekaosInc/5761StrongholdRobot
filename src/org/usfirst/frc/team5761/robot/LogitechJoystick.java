@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 public class LogitechJoystick extends DriveControl{
 
     private Joystick stick;
+    double takenAngle;
 
     public LogitechJoystick()
     {
@@ -31,19 +32,25 @@ public class LogitechJoystick extends DriveControl{
      * @param robot
      */
     private void drivingCommands( Robot robot ) {
-        if (stick.getRawButton(3)){
+        if (stick.getRawButton(1)){
+
+            robot.brake();
+            Robot.displayValue("Stopped", "brake");
+        }
+        else if (stick.getRawButton(2)){
             robot.stop();
             Robot.displayValue("Stopped","coast");
         }
-        else if (stick.getRawButton(4)){
-            robot.drive(0.01,0.01);
-            Robot.displayValue("Stopped", "brake");
-        }
         else if (stick.getRawButton(7)){
-            robot.driveStraight(0.5);
+            //double currentGyroReading = robot.getGyroReading();
+            robot.driveStraight(0.8,takenAngle);
         }
-        else if (stick.getRawButton(8)){
-            robot.resetGyro();
+//        else if (stick.getRawButton(8)){
+//            robot.resetGyro();
+//        }
+        else if (stick.getRawButton(9)){
+            takenAngle = robot.getGyroReading() % 360;
+            Robot.displayValue("Taken Angle" , takenAngle+"");
         }
 
         else {

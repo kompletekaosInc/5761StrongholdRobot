@@ -14,9 +14,12 @@ public class Drivetrain {
 
     static final Logger LOG = LoggerFactory.getLogger(Drivetrain.class);
 
+    static final double brakePower = 0.1;
+
     //RobotDrive myRobot;
     private Spark leftMC;
     private Spark rightMC;
+
 
     ADXRS450_Gyro gyro = null;
 
@@ -49,8 +52,13 @@ public class Drivetrain {
         // attempt to create the gyro
         if (gyro != null) {
             try {
+                LOG.info("resetGyro: reset");
                 gyro.reset();
+
+                LOG.info("resetGyro: calibrate");
                 gyro.calibrate();
+
+                LOG.info("resetGyro: done");
 
                 Robot.displayValue("Gyro Installed", "yes");
 
@@ -90,6 +98,22 @@ public class Drivetrain {
 
     }
 
+    public void brake(){
+        if (leftMC.get() > 0){
+            leftMC.set(-brakePower);
+        }
+        else{
+            leftMC.set(brakePower);
+        }
+        if (rightMC.get() > 0){
+            rightMC.set(-brakePower);
+        }
+        else
+        {
+            rightMC.set(brakePower);
+        }
+    }
+
 
     /**
      *
@@ -101,7 +125,7 @@ public class Drivetrain {
         //proportionally drives in the direction of a gyro heading, turning to face the right direction
         double currentGyroAngle = gyro.getAngle() % 360;
         double gyroPowerAdjustment = 0;
-        double gyroGain = 0.01;
+        double gyroGain = 0.05;
 
 
         //Calculates how much to turn based on the current heading and the target heading
@@ -123,7 +147,7 @@ public class Drivetrain {
      *
      * @return a double representing the gyro angle (or 0 if there is no gyro installed).
      */
-    private double getGyroAngle()
+    public double getGyroAngle()
     {
         double gyroAngle = 0;
 
