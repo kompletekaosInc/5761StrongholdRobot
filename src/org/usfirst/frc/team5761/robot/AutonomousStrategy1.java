@@ -37,31 +37,36 @@ public class AutonomousStrategy1 {
         {
             // in 1 second of auto
             LOG.info("doAutonomous in second 1000");
-            robot.driveStraight(0.5);
+            robot.driveStraight(0.4);
         }
         else if (currentAutoRunDuration <= 2000)
         {
             // in 2 second of auto
             LOG.info("doAutonomous in second 2000");
-            robot.driveStraight(0.5);
+            robot.driveStraight(0.8);
         }
         else if (currentAutoRunDuration <= 3000)
         {
             // in 3 second of auto
             LOG.info("doAutonomous in second 3000");
-            robot.stop();
+            robot.driveStraight(0.8);
         }
         else if (currentAutoRunDuration <= 4000)
         {
             // in 4 second of auto
             LOG.info("doAutonomous in second 4000");
-            robot.turnGyro(180);
+            //robot.turnGyro(180);
+            robot.stop();
+            robot.drive(-0.1, 0.1);
         }
-        else if (currentAutoRunDuration <= 5000)
-        {
+        else if (currentAutoRunDuration <= 5000) {
             // in 5 second of auto
             LOG.info("doAutonomous in second 5000");
             robot.driveStraight(0.5,180);
+
+        }
+        else if (currentAutoRunDuration <=6000){
+            robot.stop();
         }
         else
         {
