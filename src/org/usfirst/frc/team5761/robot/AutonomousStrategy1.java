@@ -59,15 +59,6 @@ public class AutonomousStrategy1 {
             robot.stop();
             robot.drive(-0.1, 0.1);
         }
-        else if (currentAutoRunDuration <= 5000) {
-            // in 5 second of auto
-            LOG.info("doAutonomous in second 5000");
-            robot.driveStraight(0.5,180);
-
-        }
-        else if (currentAutoRunDuration <=6000){
-            robot.stop();
-        }
         else
         {
             LOG.info("Auto: after 5 seconds");
