@@ -41,9 +41,6 @@ public class LogitechJoystick extends DriveControl{
             robot.stop();
             Robot.displayValue("Stopped","coast");
         }
-        else if (stick.getRawButton(3)){
-            robot.hardBrake();
-        }
         else if (stick.getRawButton(7)){
             //double currentGyroReading = robot.getGyroReading();
             robot.driveStraight(0.8,takenAngle);
