@@ -113,6 +113,21 @@ public class Drivetrain {
             rightMC.set(brakePower);
         }
     }
+    public void hardBrake(){
+        if (leftMC.get() > 0){
+            leftMC.set(-0.2);
+        }
+        else{
+            leftMC.set(0.2);
+        }
+        if (rightMC.get() > 0){
+            rightMC.set(-0.2);
+        }
+        else
+        {
+            rightMC.set(0.2);
+        }
+    }
 
 
     /**
