@@ -13,7 +13,7 @@ public class DriverStation {
     public DriverStation()
     {
         // when we get new DriveControl implementations, we can implement a selector via the SmartDasboard
-        driveControl = new LogitechJoystick();
+        driveControl = new LachlanJoystick(); // LogitechJoystick();
         //driveControl = new xBoxCobtrol();
     }
 

@@ -19,7 +19,7 @@ public class Robot extends IterativeRobot {
 
     static final Logger LOG = LoggerFactory.getLogger(Robot.class);
 
-    private AutonomousStrategy1 autoStrategy1;
+    private AutonomousControl autoStrategy;
     //private AutonomousStrategy2 autoStrategy2;
 
     private Drivetrain drivetrain;
@@ -60,8 +60,9 @@ public class Robot extends IterativeRobot {
 
         LOG.info("autonomousInit: BEGIN");
         // create the only strategy we have
-        autoStrategy1 = new AutonomousStrategy1(this);   // ToDo: allow selection of strategies if we have more than one
-        //autoStrategy2 = new AutonomousStrategy2((this)); //ToDo: fix this
+        // autoStrategy = new AutonomousStrategy1(this);   // ToDo: allow selection of strategies if we have more than one
+        // autoStrategy = new AutonomousStrategy2(this);
+        autoStrategy = new LachlanStrategy(this);
 
         displayValues();
 
@@ -73,7 +74,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
 
-        autoStrategy1.doAutonomous();
+        autoStrategy.doAutonomous();
 
         //displayValues();
     }

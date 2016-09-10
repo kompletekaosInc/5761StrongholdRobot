@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by jiahpang on 5/07/2016.
  */
-    public class AutonomousStrategy2 {
+    public class AutonomousStrategy2  extends AutonomousControl {
 
         static final Logger LOG = LoggerFactory.getLogger(AutonomousStrategy1.class);
         private long startTimeMs = 0;
