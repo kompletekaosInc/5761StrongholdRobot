@@ -56,6 +56,50 @@ public class LogitechJoystick extends DriveControl{
             Robot.displayValue("Taken Angle" , takenAngle+"");
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         else {
             arcadeDriveCommands(robot);
 

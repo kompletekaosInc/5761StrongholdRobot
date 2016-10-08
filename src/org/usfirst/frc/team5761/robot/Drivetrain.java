@@ -78,7 +78,7 @@ public class Drivetrain {
      */
     public void drive(double leftPower, double rightPower)
     {
-        LOG.debug("drive: [leftPower:" + leftPower + "][rightPower:" + rightPower + "]");
+        //LOG.debug("drive: [leftPower:" + leftPower + "][rightPower:" + rightPower + "]");
 
         SmartDashboard.putString("leftPower", ""+leftPower);
         SmartDashboard.putString("rightPower", ""+rightPower);
@@ -179,9 +179,9 @@ public class Drivetrain {
 
     public void displayValues()
     {
-        Robot.displayValue("Gyro Angle: " , getGyroAngle()+"");
-        Robot.displayValue("Left Motor: " , leftMC.get()+"");
-        Robot.displayValue("Right Motor: " , rightMC.get()+"");
+        //Robot.displayValue("Gyro Angle: " , getGyroAngle()+"");
+        //Robot.displayValue("Left Motor: " , leftMC.get()+"");
+        //Robot.displayValue("Right Motor: " , rightMC.get()+"");
     }
 
 
