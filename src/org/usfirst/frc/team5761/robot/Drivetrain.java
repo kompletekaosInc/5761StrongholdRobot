@@ -48,15 +48,17 @@ public class Drivetrain {
 
     }
 
-    public void resetGyro() {
+    public void calibrateGyro() {
         // attempt to create the gyro
         if (gyro != null) {
             try {
-                LOG.info("resetGyro: reset");
-                gyro.reset();
+
 
                 LOG.info("resetGyro: calibrate");
                 gyro.calibrate();
+
+                LOG.info("resetGyro: reset");
+                gyro.reset();
 
                 LOG.info("resetGyro: done");
 
@@ -68,7 +70,23 @@ public class Drivetrain {
             }
         }
     }
+    public void resetGyro() {
+        // attempt to create the gyro
+        if (gyro != null) {
+            try {
+                LOG.info("resetGyro: reset");
+                gyro.reset();
 
+                LOG.info("resetGyro: done");
+
+                Robot.displayValue("Gyro Installed", "yes");
+
+            } catch (Exception e) {
+                LOG.error("Gyro not installed correctly", e);
+                Robot.displayValue("Gyro Installed", "no");
+            }
+        }
+    }
 
     /**
      * This method will drive the motors of the robot based on the inputs.

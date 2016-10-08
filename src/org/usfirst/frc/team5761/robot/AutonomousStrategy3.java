@@ -7,14 +7,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by jiah on 3/07/2016.
  */
-public class AutonomousStrategy1 extends AutonomousControl {
+public class AutonomousStrategy3 {
 
-    static final Logger LOG = LoggerFactory.getLogger(AutonomousStrategy1.class);
+    static final Logger LOG = LoggerFactory.getLogger(AutonomousStrategy3.class);
     private long startTimeMs = 0;
     private Robot robot;
 
 
-    public AutonomousStrategy1(Robot theRobot) {
+    public AutonomousStrategy3(Robot theRobot) {
         startTimeMs = System.currentTimeMillis();
 
         SmartDashboard.putString("auto startTimeMs", ""+startTimeMs);
@@ -22,7 +22,7 @@ public class AutonomousStrategy1 extends AutonomousControl {
 
         robot = theRobot;
 
-        robot.resetGyro();
+        //robot.resetGyro();
     }
 
     public void doAutonomous()
@@ -39,25 +39,25 @@ public class AutonomousStrategy1 extends AutonomousControl {
         {
             // in 1 second of auto
             LOG.info("doAutonomous in second 1000");
-            robot.driveStraight(0.4);
+            robot.drive(-0.4, 0.4);
         }
         else if (currentAutoRunDuration <= 2000)
         {
             // in 2 second of auto
             LOG.info("doAutonomous in second 2000");
-            robot.driveStraight(0.8);
+            robot.drive(-0.80, 0.80);
         }
         else if (currentAutoRunDuration <= 3000)
         {
             // in 3 second of auto
             LOG.info("doAutonomous in second 3000");
-            robot.driveStraight(0.8);
+            robot.drive(-0.8, 0.8);
         }
         else if (currentAutoRunDuration <= 4000)
         {
             // in 4 second of auto
             LOG.info("doAutonomous in second 4000");
-            robot.driveStraight(0.4);
+            robot.drive(-0.4, 0.4);
         }
         else if (currentAutoRunDuration <= 5000)
         {
