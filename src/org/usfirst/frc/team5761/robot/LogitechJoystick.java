@@ -48,9 +48,9 @@ public class LogitechJoystick extends DriveControl{
             //double currentGyroReading = robot.getGyroReading();
             robot.driveStraight(0.8,takenAngle);
         }
-        else if (stick.getRawButton(8)){
-            robot.resetGyro();
-        }
+//        else if (stick.getRawButton(8)){
+//            robot.resetGyro();
+//        }
         else if (stick.getRawButton(9)){
             takenAngle = robot.getGyroReading() % 360;
             Robot.displayValue("Taken Angle" , takenAngle+"");
@@ -88,7 +88,7 @@ public class LogitechJoystick extends DriveControl{
         Robot.displayValue("throttle", "" + throttle);
 
 
-        double leftMotorPower = (-speed - side);// * 0.92;
+        double leftMotorPower = (-speed - side) * 0.92;
         double rightMotorPower = (speed - side);// * 0.50; //This is to compensate for the right-hand hook on the robot
 
         // tell the robot to drive using the calculated power for the left and right motors

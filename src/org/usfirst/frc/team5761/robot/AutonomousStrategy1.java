@@ -22,7 +22,7 @@ public class AutonomousStrategy1 extends AutonomousControl {
 
         robot = theRobot;
 
-        robot.resetGyro();
+        //robot.resetGyro();
     }
 
     public void doAutonomous()
@@ -57,15 +57,8 @@ public class AutonomousStrategy1 extends AutonomousControl {
         {
             // in 4 second of auto
             LOG.info("doAutonomous in second 4000");
-            robot.driveStraight(0.4);
-        }
-        else if (currentAutoRunDuration <= 5000)
-        {
-            // in 5 second of auto
-            LOG.info("doAutonomous in second 5000");
             //robot.turnGyro(180);
             robot.stop();
-            robot.brake();
             robot.drive(-0.1, 0.1);
         }
         else

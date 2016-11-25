@@ -19,14 +19,8 @@ public class Robot extends IterativeRobot {
 
     static final Logger LOG = LoggerFactory.getLogger(Robot.class);
 
-<<<<<<< Updated upstream
     private AutonomousControl autoStrategy;
     //private AutonomousStrategy2 autoStrategy2;
-=======
-    private AutonomousStrategy1 autoStrategy;
-    //private AutonomousStrategy2 autoStrategy;
-    //private AutonomousStrategy3 autoStrategy;
->>>>>>> Stashed changes
 
     private Drivetrain drivetrain;
     private Arm arm;
@@ -54,7 +48,7 @@ public class Robot extends IterativeRobot {
 
         driverStation = new DriverStation();
 
-        drivetrain.calibrateGyro();
+        drivetrain.resetGyro();
 
         LOG.info("robotInit: END");
     }
@@ -66,15 +60,10 @@ public class Robot extends IterativeRobot {
 
         LOG.info("autonomousInit: BEGIN");
         // create the only strategy we have
-<<<<<<< Updated upstream
         // autoStrategy = new AutonomousStrategy1(this);   // ToDo: allow selection of strategies if we have more than one
         // autoStrategy = new AutonomousStrategy2(this);
         autoStrategy = new LachlanStrategy(this);
 
-=======
-        autoStrategy = new AutonomousStrategy1(this);   // ToDo: allow selection of strategies if we have more than one
-        //autoStrategy2 = new AutonomousStrategy2((this)); //ToDo: fix this
->>>>>>> Stashed changes
         displayValues();
 
         LOG.info("autonomousInit: END");
