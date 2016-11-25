@@ -145,6 +145,7 @@ public class Robot extends IterativeRobot {
         drivetrain.stop();
     }
     public void brake(){drivetrain.brake();}
+    public void hardBrake(){drivetrain.hardBrake();}
 
     public void raiseArm(){
         arm.raiseArm();
